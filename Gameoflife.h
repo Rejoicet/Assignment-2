@@ -20,7 +20,7 @@ public:
 
 
   Originalgrid ();
-  char setOriginalgrid (string filename, char mode);
+  char setOriginalgrid (string filename, char mode, int output);
   char copyOriginalgrid ();
   char updateOriginalgrid (char mode, int output);
   void updateCorners(Corners& corner);

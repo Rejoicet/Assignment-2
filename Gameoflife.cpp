@@ -12,7 +12,7 @@ Originalgrid::Originalgrid ()
   countofx = 1;
 }
 
-char Originalgrid::setOriginalgrid (string filename, char mode)
+char Originalgrid::setOriginalgrid (string filename, char mode, int output)
 {
   Gameoflife.open (filename);
 
@@ -95,6 +95,19 @@ char Originalgrid::setOriginalgrid (string filename, char mode)
     *(*(pdimensions + a+1) + b+1) = *(*(pdimensions + a) + b);
   }
 
+  if (output == 3) {
+    freopen ("Rejoice.out", "w", stdout);
+  };
+
+  cout << "Generation number: 0" << endl;
+
+  for (int i = 1; i < a+1; i++) {
+    for (int j = 1; j < b+1; j++) {
+      cout << *(*(pdimensions + i) + j);
+    }
+    cout << endl;
+  }
+
   int xcount = 0;
 
   for (int i = 1; i < *ptrr+1; i++) {
@@ -108,15 +121,6 @@ char Originalgrid::setOriginalgrid (string filename, char mode)
   if (xcount == 0) {
     cout << "The current generation is nice and stable. No more generations possible. Tada!" << endl;
     exit(1);
-  }
-
-  cout << "Generation number: 0" << endl;
-
-  for (int i = 1; i < a+1; i++) {
-    for (int j = 1; j < b+1; j++) {
-      cout << *(*(pdimensions + i) + j);
-    }
-    cout << endl;
   }
 
 }
@@ -149,9 +153,6 @@ char Originalgrid::copyOriginalgrid ()
 
 char Originalgrid::updateOriginalgrid (char mode, int output)
 {
-  /*if (output == 3) {
-    freopen ("Rejoice.out", "w", stdout);
-  };*/
 
   while (countofx != 0) {
 
@@ -265,6 +266,8 @@ char Originalgrid::updateOriginalgrid (char mode, int output)
     countofx = xcount;
 
   }
+
+  fclose (stdout);
 
   if (countofx == 0) {
     cout << "The current generation is nice and stable. No more generations possible. Tada!" << endl;

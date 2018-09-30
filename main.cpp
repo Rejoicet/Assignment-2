@@ -28,7 +28,7 @@ int main () {
   cin >> out;
 
   Originalgrid dimension1;
-  dimension1.setOriginalgrid(nameoffile, mod);
+  dimension1.setOriginalgrid(nameoffile, mod, out);
   dimension1.copyOriginalgrid();
   dimension1.updateOriginalgrid(mod, out);
 
