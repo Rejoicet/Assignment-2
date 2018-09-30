@@ -219,6 +219,33 @@ char Originalgrid::updateOriginalgrid (char mode, int output)
       cout << endl;
     }
 
+    if (mode == 'M' || mode == 'm') {
+      for (int i = 0; i < 1; i++) {
+        for (int j = 1; j < b+2 ; j++) {
+          *(*(pdimensions + i) + j) = *(*(pdimensions + i+1) + j);
+        }
+      }
+      for (int i = a+1; i < a+2 ; i++) {
+        for (int j = 1; j < b+2; j++) {
+          *(*(pdimensions + i) + j) = *(*(pdimensions + i-1) + j);
+        }
+      }
+      for (int i = 1; i < a+2; i++) {
+        for (int j = 0; j < 1; j++) {
+          *(*(pdimensions + i) + j) = *(*(pdimensions + i) + j+1);
+        }
+      }
+      for (int i = 1; i < a+2; i++) {
+        for (int j = b+1; j < b+2; j++) {
+          *(*(pdimensions + i) + j) = *(*(pdimensions + i) + j-1);
+        }
+      }
+      *(*(pdimensions + 0) + 0) = *(*(pdimensions + 1) + 1);
+      *(*(pdimensions + 0) + b+1) = *(*(pdimensions + 1) + b);
+      *(*(pdimensions + a+1) + 0) = *(*(pdimensions + a) + 1);
+      *(*(pdimensions + a+1) + b+1) = *(*(pdimensions + a) + b);
+    }
+
     for (int i = 0; i < *ptrr+2; i++) {         //copying the current generation
       for (int j = 0; j < *ptrc+2; j++) {
         *(*(copypdimensions + i) + j) = *(*(pdimensions + i) + j);
