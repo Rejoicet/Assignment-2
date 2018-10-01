@@ -1,6 +1,6 @@
 #include "Gameoflife.h"
 #include <iostream>
-#include <chrono>
+#include <chrono>                   //chrono, thread and limits for pause
 #include <thread>
 #include <limits>
 #include <cstdlib>                  //to use rand function
@@ -16,7 +16,7 @@ Originalgrid::Originalgrid ()
 
 char Originalgrid::setOriginalgrid (string filename, char mode, int output, char type, int rows, int columns)
 {
-  if (type == 'R' || type == 'r') {
+  if (type == 'R' || type == 'r') {         //randomly initializing grid
     r = rows;
     c = columns;
     TotalArea = r*c;
@@ -27,12 +27,12 @@ char Originalgrid::setOriginalgrid (string filename, char mode, int output, char
     a = r;
     b = c;
 
-    ptrr = new int;
+    ptrr = new int;                       //pointer of rows to be used in subsequent functions
     *ptrr = r;
-    ptrc = new int;
+    ptrc = new int;                       //pointer of columns to be used isubsequent functions
     *ptrc = c;
 
-    pdimensions = new char*[a+2];
+    pdimensions = new char*[a+2];        //pointer to create the original array
 
     for (int i = 0; i < a+2; i++) {
       for (int j = 0; j < b+2; j++) {
@@ -43,13 +43,13 @@ char Originalgrid::setOriginalgrid (string filename, char mode, int output, char
     r = 1;
     c = 1;
 
-    for (int i = 0; i < a+2; i++) {
+    for (int i = 0; i < a+2; i++) {     //initializing the entire array with ''-'
       for (int j = 0; j < b+2; j++) {
         *(*(pdimensions + i) + j) = '-';
       }
     }
 
-    for (int i = 1; i < a+1; i++) {
+    for (int i = 1; i < a+1; i++) {    //inputting the no. of X
       for (int j = 1; j < b+1;   j++) {
         if (NoofX != 0) {
           *(*(pdimensions + i) + j) = 'X';
@@ -58,7 +58,7 @@ char Originalgrid::setOriginalgrid (string filename, char mode, int output, char
       }
     }
 
-  } else if (type == 'F' || type == 'f') {
+  } else if (type == 'F' || type == 'f') {      //initializing grid using input from a file
     Gameoflife.open (filename);
 
     if (!Gameoflife) {             //Exception if error in opening file
@@ -68,7 +68,7 @@ char Originalgrid::setOriginalgrid (string filename, char mode, int output, char
       cout << "3 - File name/path is correct" << endl;
       exit(1);
     }
-    
+
     getline (Gameoflife,s);
     istringstream firstrow (s);
     firstrow >> r;
@@ -115,7 +115,7 @@ char Originalgrid::setOriginalgrid (string filename, char mode, int output, char
 
   }
 
-  if (mode == 'M' || mode == 'm') {
+  if (mode == 'M' || mode == 'm') {       //generating right neighbours for mirror mode
     for (int i = 0; i < 1; i++) {
       for (int j = 1; j < b+2 ; j++) {
         *(*(pdimensions + i) + j) = *(*(pdimensions + i+1) + j);
@@ -143,7 +143,7 @@ char Originalgrid::setOriginalgrid (string filename, char mode, int output, char
   }
 
 
-  if (output == 3) {
+  if (output == 3) {              //to output to a file
     freopen ("Rejoice.out", "w", stdout);
   };
 
@@ -175,7 +175,7 @@ char Originalgrid::setOriginalgrid (string filename, char mode, int output, char
 
 char Originalgrid::copyOriginalgrid ()
 {
-  copypdimensions = new char*[*ptrr];
+  copypdimensions = new char*[*ptrr];     //ponter to the grid that is copied
 
   for (int i = 0; i < *ptrr+2; i++) {
     for (int j = 0; j < *ptrc+2; j++) {
@@ -199,16 +199,16 @@ char Originalgrid::copyOriginalgrid ()
 
 }
 
-char Originalgrid::updateOriginalgrid (char mode, int output)
+char Originalgrid::computeOriginalgrid (char mode, int output)
 {
 
   while (countofx != 0) {
 
-    if (output == 2) {
+    if (output == 2) {        //pressing enter to progress
       cout << "Press ENTER to contine..." << endl;
       cin.ignore (numeric_limits <streamsize> :: max(), '\n');
-    } else if (output == 1) {
-      chrono::seconds dura (3);
+    } else if (output == 1) {   //pausing for specified time before outputting generation
+      chrono::seconds dura (2);
       this_thread::sleep_for (dura);
     }
 

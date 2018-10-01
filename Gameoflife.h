@@ -1,11 +1,9 @@
 #include <iostream>
-#include <fstream>
+#include <fstream>              //to input and output with files
 #include <string>
 #include <sstream>
 
 using namespace std;
-
-class Corners;
 
 class Originalgrid {
 public:
@@ -26,7 +24,6 @@ public:
   Originalgrid ();
   char setOriginalgrid (string filename, char mode, int output, char type, int rows, int columns);
   char copyOriginalgrid ();
-  char updateOriginalgrid (char mode, int output);
-  void updateCorners(Corners& corner);
+  char computeOriginalgrid (char mode, int output);
 
 };

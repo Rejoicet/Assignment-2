@@ -43,7 +43,7 @@ int main () {
   Originalgrid dimension1;
   dimension1.setOriginalgrid(nameoffile, mod, out, typ, row, column);
   dimension1.copyOriginalgrid();
-  dimension1.updateOriginalgrid(mod, out);
+  dimension1.computeOriginalgrid(mod, out);
 
   return 0;
 
