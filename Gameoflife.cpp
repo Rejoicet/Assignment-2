@@ -140,8 +140,33 @@ char Originalgrid::setOriginalgrid (string filename, char mode, int output, char
     *(*(pdimensions + 0) + b+1) = *(*(pdimensions + 1) + b);
     *(*(pdimensions + a+1) + 0) = *(*(pdimensions + a) + 1);
     *(*(pdimensions + a+1) + b+1) = *(*(pdimensions + a) + b);
-  }
+  } else if (mode == 'D' or mode == 'd') {
 
+    for (int i = 0; i < 1; i++) {
+      for (int j = 1; j < b+2 ; j++) {
+        *(*(pdimensions + i) + j) = *(*(pdimensions + a) + j);
+      }
+    }
+    for (int i = a+1; i < a+2 ; i++) {
+      for (int j = 1; j < b+2; j++) {
+        *(*(pdimensions + i) + j) = *(*(pdimensions + 1) + j);
+      }
+    }
+    for (int i = 1; i < a+2; i++) {
+      for (int j = 0; j < 1; j++) {
+        *(*(pdimensions + i) + j) = *(*(pdimensions + i) + b);
+      }
+    }
+    for (int i = 1; i < a+2; i++) {
+      for (int j = b+1; j < b+2; j++) {
+        *(*(pdimensions + i) + j) = *(*(pdimensions + i) + 1);
+      }
+    }
+    *(*(pdimensions + 0) + 0) = *(*(pdimensions + a) + b);
+    *(*(pdimensions + 0) + b+1) = *(*(pdimensions + a) + 1);
+    *(*(pdimensions + a+1) + 0) = *(*(pdimensions + 1) + b);
+    *(*(pdimensions + a+1) + b+1) = *(*(pdimensions + 1) + 1);
+  }
 
   if (output == 3) {              //to output to a file
     freopen ("Rejoice.out", "w", stdout);
@@ -293,6 +318,32 @@ char Originalgrid::computeOriginalgrid (char mode, int output)
       *(*(pdimensions + 0) + b+1) = *(*(pdimensions + 1) + b);
       *(*(pdimensions + a+1) + 0) = *(*(pdimensions + a) + 1);
       *(*(pdimensions + a+1) + b+1) = *(*(pdimensions + a) + b);
+    } else if (mode == 'D' or mode == 'd') {
+
+      for (int i = 0; i < 1; i++) {
+        for (int j = 1; j < b+2 ; j++) {
+          *(*(pdimensions + i) + j) = *(*(pdimensions + a) + j);
+        }
+      }
+      for (int i = a+1; i < a+2 ; i++) {
+        for (int j = 1; j < b+2; j++) {
+          *(*(pdimensions + i) + j) = *(*(pdimensions + 1) + j);
+        }
+      }
+      for (int i = 1; i < a+2; i++) {
+        for (int j = 0; j < 1; j++) {
+          *(*(pdimensions + i) + j) = *(*(pdimensions + i) + b);
+        }
+      }
+      for (int i = 1; i < a+2; i++) {
+        for (int j = b+1; j < b+2; j++) {
+          *(*(pdimensions + i) + j) = *(*(pdimensions + i) + 1);
+        }
+      }
+      *(*(pdimensions + 0) + 0) = *(*(pdimensions + a) + b);
+      *(*(pdimensions + 0) + b+1) = *(*(pdimensions + a) + 1);
+      *(*(pdimensions + a+1) + 0) = *(*(pdimensions + 1) + b);
+      *(*(pdimensions + a+1) + b+1) = *(*(pdimensions + 1) + 1);
     }
 
     for (int i = 0; i < *ptrr+2; i++) {         //copying the current generation

@@ -31,6 +31,7 @@ int main () {
 
   cout << "Enter the alphabet displayed against the mode you wish to run: " << endl;
   cout << "C - I want to run in Classic mode" << endl;
+  cout << "D - I want to run in Doughnut mode" << endl;
   cout << "M - I want to run in Mirror mode" << endl;
   cin >> mod;
 
