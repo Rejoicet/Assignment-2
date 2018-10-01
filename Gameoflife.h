@@ -10,17 +10,21 @@ class Corners;
 class Originalgrid {
 public:
   ifstream Gameoflife;
+
   string s;
-  int r, c, a, b, abc, ncount, xcount, countofx, n;
+
+  int r, c, a, b, abc, ncount, xcount, countofx, n, NoofX, TotalArea;
   int *ptrr, *ptrc;
+  int ** count;
+
   char cell, value;
   char ** pdimensions;
   char ** copypdimensions;
-  int ** count;
 
+  float density;
 
   Originalgrid ();
-  char setOriginalgrid (string filename, char mode, int output);
+  char setOriginalgrid (string filename, char mode, int output, char type, int rows, int columns);
   char copyOriginalgrid ();
   char updateOriginalgrid (char mode, int output);
   void updateCorners(Corners& corner);

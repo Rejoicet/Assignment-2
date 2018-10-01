@@ -3,6 +3,8 @@
 #include <chrono>
 #include <thread>
 #include <limits>
+#include <cstdlib>                  //to use rand function
+#include <ctime>                    //to initialize srand function to time(NULL)
 
 using namespace std;
 
@@ -12,60 +14,105 @@ Originalgrid::Originalgrid ()
   countofx = 1;
 }
 
-char Originalgrid::setOriginalgrid (string filename, char mode, int output)
+char Originalgrid::setOriginalgrid (string filename, char mode, int output, char type, int rows, int columns)
 {
-  Gameoflife.open (filename);
+  if (type == 'R' || type == 'r') {
+    r = rows;
+    c = columns;
+    TotalArea = r*c;
+    srand (time(NULL));
+    density = rand()/(RAND_MAX+1.0);
+    NoofX = density*TotalArea;
 
-  if (!Gameoflife) {             //Exception if error in opening file
-    cout << "Unable to open the file. Please check the following and run the program again -" << endl;
-    cout << "1 - File is not open already" << endl;
-    cout << "2 - Check some other program is not using it" << endl;
-    cout << "3 - File name/path is correct" << endl;
-    exit(1);
-  }
+    a = r;
+    b = c;
 
-  getline (Gameoflife,s);
-  istringstream firstrow (s);
-  firstrow >> r;
-  getline (Gameoflife,s);
-  istringstream secondrow (s);
-  secondrow >> c;
+    ptrr = new int;
+    *ptrr = r;
+    ptrc = new int;
+    *ptrc = c;
 
-  a = r;
-  b = c;
+    pdimensions = new char*[a+2];
 
-  ptrr = new int;
-  *ptrr = r;
-  ptrc = new int;
-  *ptrc = c;
-
-  pdimensions = new char*[a+2];
-
-  for (int i = 0; i < a+2; i++) {
-    for (int j = 0; j < b+2; j++) {
-      pdimensions[i] = new char[b+2];
+    for (int i = 0; i < a+2; i++) {
+      for (int j = 0; j < b+2; j++) {
+        pdimensions[i] = new char[b+2];
+      }
     }
-  }
 
-  r = 1;
-  c = 1;
+    r = 1;
+    c = 1;
 
-  for (int i = 0; i < a+2; i++) {
-    for (int j = 0; j < b+2; j++) {
-      *(*(pdimensions + i) + j) = '-';
+    for (int i = 0; i < a+2; i++) {
+      for (int j = 0; j < b+2; j++) {
+        *(*(pdimensions + i) + j) = '-';
+      }
     }
-  }
 
-  while (Gameoflife >> cell) {
-    if (c == b) {
-      *(*(pdimensions + r) + c) = cell;
-      r++;
-      c = 1;
+    for (int i = 1; i < a+1; i++) {
+      for (int j = 1; j < b+1;   j++) {
+        if (NoofX != 0) {
+          *(*(pdimensions + i) + j) = 'X';
+          --NoofX;
+        }
+      }
     }
-    else {
-      *(*(pdimensions + r) + c) = cell;
-      c++;
+
+  } else if (type == 'F' || type == 'f') {
+    Gameoflife.open (filename);
+
+    if (!Gameoflife) {             //Exception if error in opening file
+      cout << "Unable to open the file. Please check the following and run the program again -" << endl;
+      cout << "1 - File is not open already" << endl;
+      cout << "2 - Check some other program is not using it" << endl;
+      cout << "3 - File name/path is correct" << endl;
+      exit(1);
     }
+    
+    getline (Gameoflife,s);
+    istringstream firstrow (s);
+    firstrow >> r;
+    getline (Gameoflife,s);
+    istringstream secondrow (s);
+    secondrow >> c;
+
+    a = r;
+    b = c;
+
+    ptrr = new int;
+    *ptrr = r;
+    ptrc = new int;
+    *ptrc = c;
+
+    pdimensions = new char*[a+2];
+
+    for (int i = 0; i < a+2; i++) {
+      for (int j = 0; j < b+2; j++) {
+        pdimensions[i] = new char[b+2];
+      }
+    }
+
+    r = 1;
+    c = 1;
+
+    for (int i = 0; i < a+2; i++) {
+      for (int j = 0; j < b+2; j++) {
+        *(*(pdimensions + i) + j) = '-';
+      }
+    }
+
+    while (Gameoflife >> cell) {
+      if (c == b) {
+        *(*(pdimensions + r) + c) = cell;
+        r++;
+        c = 1;
+      }
+      else {
+        *(*(pdimensions + r) + c) = cell;
+        c++;
+      }
+    }
+
   }
 
   if (mode == 'M' || mode == 'm') {
@@ -94,6 +141,7 @@ char Originalgrid::setOriginalgrid (string filename, char mode, int output)
     *(*(pdimensions + a+1) + 0) = *(*(pdimensions + a) + 1);
     *(*(pdimensions + a+1) + b+1) = *(*(pdimensions + a) + b);
   }
+
 
   if (output == 3) {
     freopen ("Rejoice.out", "w", stdout);

@@ -7,14 +7,27 @@ using namespace std;
 
 string nameoffile;
 
-char mod;
+char mod, typ;
 
-int out;
+int out, row, column;
 
 
 int main () {
-  cout << "Please enter the exact name of the file with the extension: " << endl;
-  cin >> nameoffile;
+
+  cout << "Please enter the alphabet against the input you desire to run: " << endl;
+  cout << "R - I want to give dimensions and run it randomly" << endl;
+  cout << "F - I want to enter the file name situated in the location" << endl;
+  cin >> typ;
+
+  if (typ == 'R' || typ == 'r') {
+    cout << "Please enter the number of rows" << endl;
+    cin >> row;
+    cout << "Please enter the number of columns" << endl;
+    cin >> column;
+  } else if (typ == 'F' || typ == 'f') {
+    cout << "Please enter the exact name of the file with the extension: " << endl;
+    cin >> nameoffile;
+  }
 
   cout << "Enter the alphabet displayed against the mode you wish to run: " << endl;
   cout << "C - I want to run in Classic mode" << endl;
@@ -28,7 +41,7 @@ int main () {
   cin >> out;
 
   Originalgrid dimension1;
-  dimension1.setOriginalgrid(nameoffile, mod, out);
+  dimension1.setOriginalgrid(nameoffile, mod, out, typ, row, column);
   dimension1.copyOriginalgrid();
   dimension1.updateOriginalgrid(mod, out);
 
